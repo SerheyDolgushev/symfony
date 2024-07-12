@@ -48,7 +48,6 @@ use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
 use Symfony\Component\Messenger\Worker;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\RateLimiter\Storage\InMemoryStorage;
-use Symfony\Contracts\Service\ResetInterface;
 
 /**
  * @group time-sensitive
@@ -403,7 +402,7 @@ class WorkerTest extends TestCase
 
         $worker = new Worker(['transport1' => $receiver1, 'transport2' => $receiver2], $bus, clock: new MockClock());
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage(sprintf('Receiver for "transport2" does not implement "%s".', QueueReceiverInterface::class));
+        $this->expectExceptionMessage(\sprintf('Receiver for "transport2" does not implement "%s".', QueueReceiverInterface::class));
         $worker->run(['queues' => ['foo']]);
     }
 

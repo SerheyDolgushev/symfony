@@ -25,13 +25,13 @@ class RedisTraitTest extends TestCase
     public function testCreateConnection(string $dsn, string $expectedClass)
     {
         if (!class_exists($expectedClass)) {
-            self::markTestSkipped(sprintf('The "%s" class is required.', $expectedClass));
+            self::markTestSkipped(\sprintf('The "%s" class is required.', $expectedClass));
         }
         if (!getenv('REDIS_CLUSTER_HOSTS')) {
             self::markTestSkipped('REDIS_CLUSTER_HOSTS env var is not defined.');
         }
 
-        $mock = new class () {
+        $mock = new class() {
             use RedisTrait;
         };
         $connection = $mock::createConnection($dsn);
@@ -45,7 +45,7 @@ class RedisTraitTest extends TestCase
             self::markTestSkipped('REDIS_AUTHENTICATED_HOST env var is not defined.');
         }
 
-        $mock = new class () {
+        $mock = new class() {
             use RedisTrait;
         };
         $connection = $mock::createConnection('redis://:p%40ssword@'.getenv('REDIS_AUTHENTICATED_HOST'));
@@ -56,23 +56,23 @@ class RedisTraitTest extends TestCase
 
     public static function provideCreateConnection(): array
     {
-        $hosts = array_map(fn ($host) => sprintf('host[%s]', $host), explode(' ', getenv('REDIS_CLUSTER_HOSTS')));
+        $hosts = array_map(fn ($host) => \sprintf('host[%s]', $host), explode(' ', getenv('REDIS_CLUSTER_HOSTS')));
 
         return [
             [
-                sprintf('redis:?%s&redis_cluster=1', $hosts[0]),
+                \sprintf('redis:?%s&redis_cluster=1', $hosts[0]),
                 'RedisCluster',
             ],
             [
-                sprintf('redis:?%s&redis_cluster=true', $hosts[0]),
+                \sprintf('redis:?%s&redis_cluster=true', $hosts[0]),
                 'RedisCluster',
             ],
             [
-                sprintf('redis:?%s', $hosts[0]),
+                \sprintf('redis:?%s', $hosts[0]),
                 'Redis',
             ],
             [
-                'dsn' => sprintf('redis:?%s', implode('&', \array_slice($hosts, 0, 2))),
+                'dsn' => \sprintf('redis:?%s', implode('&', \array_slice($hosts, 0, 2))),
                 'RedisArray',
             ],
         ];
@@ -104,7 +104,7 @@ class RedisTraitTest extends TestCase
         }
 
         try {
-            $mock = new class () {
+            $mock = new class() {
                 use RedisTrait;
             };
 

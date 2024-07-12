@@ -22,7 +22,7 @@
         "symfony/http-kernel": "^6.4|^7.0",
         "symfony/polyfill-mbstring": "~1.0",
         "symfony/property-access": "^6.4|^7.0",
-        "symfony/security-core": "^6.4|^7.0",
+        "symfony/security-core": "^7.2",
         "symfony/service-contracts": "^2.5|^3"
     },
     "require-dev": {
@@ -36,7 +36,7 @@
         "symfony/security-csrf": "^6.4|^7.0",
         "symfony/translation": "^6.4|^7.0",
         "psr/log": "^1|^2|^3",
-        "web-token/jwt-library": "^3.3.2"
+        "web-token/jwt-library": "^3.3.2|^4.0"
     },
     "conflict": {
         "symfony/clock": "<6.4",

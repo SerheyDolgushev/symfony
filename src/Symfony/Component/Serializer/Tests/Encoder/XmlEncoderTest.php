@@ -671,8 +671,8 @@ XML;
 XML;
 
         $expected = ['person' => [
-          ['firstname' => 'Benjamin', 'lastname' => 'Alexandre'],
-          ['firstname' => 'Damien', 'lastname' => 'Clay'],
+            ['firstname' => 'Benjamin', 'lastname' => 'Alexandre'],
+            ['firstname' => 'Damien', 'lastname' => 'Clay'],
         ]];
 
         $this->assertEquals($expected, $this->encoder->decode($source, 'xml'));
@@ -695,8 +695,8 @@ XML;
 </people>
 XML;
         $expected = ['person' => [
-          ['firstname' => 'Benjamin', 'lastname' => 'Alexandre'],
-          ['firstname' => 'Damien', 'lastname' => 'Clay'],
+            ['firstname' => 'Benjamin', 'lastname' => 'Alexandre'],
+            ['firstname' => 'Damien', 'lastname' => 'Clay'],
         ]];
         $this->assertEquals($expected, $this->encoder->decode(
             $source,
@@ -730,8 +730,8 @@ XML;
         $this->encoder->setSerializer($serializer);
 
         $expected = ['person' => [
-          ['firstname' => 'Benjamin', 'lastname' => 'Alexandre', '#comment' => ' This comment should be decoded. '],
-          ['firstname' => 'Damien', 'lastname' => 'Clay'],
+            ['firstname' => 'Benjamin', 'lastname' => 'Alexandre', '#comment' => ' This comment should be decoded. '],
+            ['firstname' => 'Damien', 'lastname' => 'Clay'],
         ]];
 
         $this->assertEquals($expected, $this->encoder->decode($source, 'xml'));
@@ -1050,14 +1050,14 @@ XML;
 
     private function createXmlWithDateTime(): string
     {
-        return sprintf('<?xml version="1.0"?>
+        return \sprintf('<?xml version="1.0"?>
 <response><dateTime>%s</dateTime></response>
 ', $this->exampleDateTimeString);
     }
 
     private function createXmlWithDateTimeField(): string
     {
-        return sprintf('<?xml version="1.0"?>
+        return \sprintf('<?xml version="1.0"?>
 <response><foo dateTime="%s"/></response>
 ', $this->exampleDateTimeString);
     }

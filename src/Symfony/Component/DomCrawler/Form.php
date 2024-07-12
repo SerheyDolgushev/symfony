@@ -23,7 +23,6 @@ class Form extends Link implements \ArrayAccess
 {
     private \DOMElement $button;
     private FormFieldRegistry $fields;
-    private ?string $baseHref;
 
     /**
      * @param \DOMElement $node       A \DOMElement instance
@@ -33,10 +32,13 @@ class Form extends Link implements \ArrayAccess
      *
      * @throws \LogicException if the node is not a button inside a form tag
      */
-    public function __construct(\DOMElement $node, ?string $currentUri = null, ?string $method = null, ?string $baseHref = null)
-    {
+    public function __construct(
+        \DOMElement $node,
+        ?string $currentUri = null,
+        ?string $method = null,
+        private ?string $baseHref = null,
+    ) {
         parent::__construct($node, $currentUri, $method);
-        $this->baseHref = $baseHref;
 
         $this->initialize();
     }
@@ -360,7 +362,7 @@ class Form extends Link implements \ArrayAccess
                 $formId = $node->getAttribute('form');
                 $form = $node->ownerDocument->getElementById($formId);
                 if (null === $form) {
-                    throw new \LogicException(sprintf('The selected node has an invalid form attribute (%s).', $formId));
+                    throw new \LogicException(\sprintf('The selected node has an invalid form attribute (%s).', $formId));
                 }
                 $this->node = $form;
 
@@ -373,7 +375,7 @@ class Form extends Link implements \ArrayAccess
                 }
             } while ('form' !== $node->nodeName);
         } elseif ('form' !== $node->nodeName) {
-            throw new \LogicException(sprintf('Unable to submit on a "%s" tag.', $node->nodeName));
+            throw new \LogicException(\sprintf('Unable to submit on a "%s" tag.', $node->nodeName));
         }
 
         $this->node = $node;
@@ -418,7 +420,7 @@ class Form extends Link implements \ArrayAccess
             // corresponding elements are either descendants or have a matching HTML5 form attribute
             $formId = Crawler::xpathLiteral($this->node->getAttribute('id'));
 
-            $fieldNodes = $xpath->query(sprintf('( descendant::input[@form=%s] | descendant::button[@form=%1$s] | descendant::textarea[@form=%1$s] | descendant::select[@form=%1$s] | //form[@id=%1$s]//input[not(@form)] | //form[@id=%1$s]//button[not(@form)] | //form[@id=%1$s]//textarea[not(@form)] | //form[@id=%1$s]//select[not(@form)] )[( not(ancestor::template) or ancestor::turbo-stream )]', $formId));
+            $fieldNodes = $xpath->query(\sprintf('( descendant::input[@form=%s] | descendant::button[@form=%1$s] | descendant::textarea[@form=%1$s] | descendant::select[@form=%1$s] | //form[@id=%1$s]//input[not(@form)] | //form[@id=%1$s]//button[not(@form)] | //form[@id=%1$s]//textarea[not(@form)] | //form[@id=%1$s]//select[not(@form)] )[( not(ancestor::template) or ancestor::turbo-stream )]', $formId));
             foreach ($fieldNodes as $node) {
                 $this->addField($node);
             }

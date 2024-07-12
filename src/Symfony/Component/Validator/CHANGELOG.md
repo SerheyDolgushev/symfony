@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+7.2
+---
+
+ * `IbanValidator` accepts IBANs containing non-breaking and narrow non-breaking spaces
+ * Make `PasswordStrengthValidator::estimateStrength()` public
+ * Add the `Yaml` constraint for validating YAML content
+ * Add `errorPath` to Unique constraint
+ * Add the `format` option to the `Ulid` constraint to allow accepting different ULID formats
+
 7.1
 ---
 
